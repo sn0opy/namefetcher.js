@@ -1,0 +1,16 @@
+{
+  "name": "namefetcher",
+  "version": "1.0.0",
+  "description": "Fetches names for given IDs",
+  "main": "name_fetcher.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "mysql2": "^2.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sascha Ohms <sasch9r@gmail.com>",
+  "license": "ISC"
+}
