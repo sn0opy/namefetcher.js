@@ -45,10 +45,9 @@
  *   - add ability to set environment variables instead of modifying the script
 */
 
-const token = '' // the one provided on Discord with this script
-const url = ''   // also provided on Discord
-
-const dbConfig = {
+let token = '' // the one provided on Discord with this script
+let url = ''   // also provided on Discord
+let dbConfig = {
   'host': '127.0.0.1',
   'user': '',
   'password': '',
