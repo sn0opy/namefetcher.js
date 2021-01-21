@@ -2,13 +2,25 @@
  * Finds unknown fort names in any RM database and attempts to
  * find and update the name and images of them.
  *
+ * Installation:
  * If you just downloaded the single file, you have to install the
  * requirements via: npm install axios mysql2
  *
  * If you cloned the whole repository, simply run: npm install
  *
  * Usage:
- *  - modify first few lines of name_fetcher.js to match your confguration
+ *  - configure the script via either of theses options:
+ *      option a)
+ *        modify first few lines of name_fetcher.js to match your confguration
+ *      option b)
+ *        set the following environment variables to match your setup:
+ *        - NF_TOKEN
+ *        - NF_URL
+ *        - NF_DB_HOST     (default: 127.0.0.1)
+ *        - NF_DB_USER
+ *        - NF_DB_PASSWORD
+ *        - NF_DB_DATABASE
+ *        - NF_DB_PORT     (default: 3306)
  *  - run: node name_fetcher.js
  *
  * Changelog:
@@ -29,6 +41,8 @@
  *   2021-01-20:
  *   - initial public Github release
  *   - proper error handling
+ *   2021-01-21:
+ *   - add ability to set environment variables instead of modifying the script
 */
 
 const token = '' // the one provided on Discord with this script
@@ -46,13 +60,22 @@ const dbConfig = {
 try {
   console.log('Starting namefetcher')
 
+  // prefer env variables
+  token = process.env.NF_TOKEN || token
+  url = process.env.NF_URL || url
+  dbConfig.host = process.env.NF_DB_HOST || dbConfig.host
+  dbConfig.user = process.env.NF_DB_USER || dbConfig.user
+  dbConfig.password = process.env.NF_DB_PASSWORD || dbConfig.password
+  dbConfig.database = process.env.NF_DB_DATABASE || dbConfig.database
+  dbConfig.port = process.env.NF_DB_PORT || dbConfig.port
+
   if (!token || !url) {
     console.error(`Please make sure that the url and token variables are set`)
     process.exit(1)
   }
 
-  if (!dbConfig.user || !dbConfig.database) {
-    console.error(`Please make sure that db username and db name are set`)
+  if (!dbConfig.host || !dbConfig.user || !dbConfig.password || !dbConfig.database || !dbConfig.port) {
+    console.error(`Please make sure that your db configuration is peroperly set`)
     process.exit(1)
   }
 

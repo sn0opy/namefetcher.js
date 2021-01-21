@@ -11,8 +11,17 @@ requirements via: `npm install axios mysql2`
 If you cloned the whole repository, simply run: `npm install`
 
 ## Usage
- - modify first few lines of name_fetcher.js to match your confguration
- - run: `node name_fetcher.js`
+  * configure the script via either of theses options:
+    - option a) modify first few lines of name_fetcher.js to match your confguration
+    - option b) set the following environment variables to match your setup:
+      - NF_TOKEN
+      - NF_URL
+      - NF_DB_HOST     (default: 127.0.0.1)
+      - NF_DB_USER
+      - NF_DB_PASSWORD
+      - NF_DB_DATABASE
+      - NF_DB_PORT     (default: 3306)
+  * run: `node name_fetcher.js`
 
 ## Changelog
   * 2019-11-28:
@@ -32,3 +41,5 @@ If you cloned the whole repository, simply run: `npm install`
   * 2021-01-20:
     - initial public Github release
     - proper error handling
+  * 2021-01-21:
+    - add ability to set environment variables instead of modifying the script
