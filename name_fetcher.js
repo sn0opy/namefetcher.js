@@ -74,7 +74,7 @@ try {
   }
 
   if (!dbConfig.host || !dbConfig.user || !dbConfig.password || !dbConfig.database || !dbConfig.port) {
-    console.error(`Please make sure that your db configuration is peroperly set`)
+    console.error(`Please make sure that your db configuration is properly set`)
     process.exit(1)
   }
 
