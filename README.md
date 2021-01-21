@@ -12,7 +12,7 @@ If you cloned the whole repository, simply run: `npm install`
 
 ## Usage
   * configure the script via either of theses options:
-    - option a) modify first few lines of name_fetcher.js to match your confguration
+    - option a) modify first few lines of `name_fetcher.js` to match your confguration
     - option b) set the following environment variables to match your setup:
       - NF_TOKEN
       - NF_URL
@@ -22,6 +22,18 @@ If you cloned the whole repository, simply run: `npm install`
       - NF_DB_DATABASE
       - NF_DB_PORT     (default: 3306)
   * run: `node name_fetcher.js`
+
+By default, this script will run perfectly well with any RM database. If
+you like to use it with a different DB format, you can specify a custom JSON
+formatted config file with adjusted column names via `NF_DB_COLS_CONF`. The
+format should look like so:
+
+```
+{
+  "gym": { "table": "gymdetails", "imageCol": "url", "id": "gym_id", "type": "gyms" },
+  "stop": { "table": "pokestop", "imageCol": "image", "id": "pokestop_id", "type": "stops" }
+}
+```
 
 ## Changelog
   * 2019-11-28:
@@ -43,3 +55,4 @@ If you cloned the whole repository, simply run: `npm install`
     - proper error handling
   * 2021-01-21:
     - add ability to set environment variables instead of modifying the script
+    - add ability to specify a different column format / names via `NF_DB_COLS_CONF`

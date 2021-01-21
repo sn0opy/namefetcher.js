@@ -1,48 +1,10 @@
 /*
- * Finds unknown fort names in any RM database and attempts to
- * find and update the name and images of them.
- *
- * Installation:
- * If you just downloaded the single file, you have to install the
- * requirements via: npm install axios mysql2
- *
- * If you cloned the whole repository, simply run: npm install
- *
- * Usage:
- *  - configure the script via either of theses options:
- *      option a)
- *        modify first few lines of name_fetcher.js to match your confguration
- *      option b)
- *        set the following environment variables to match your setup:
- *        - NF_TOKEN
- *        - NF_URL
- *        - NF_DB_HOST     (default: 127.0.0.1)
- *        - NF_DB_USER
- *        - NF_DB_PASSWORD
- *        - NF_DB_DATABASE
- *        - NF_DB_PORT     (default: 3306)
- *  - run: node name_fetcher.js
- *
- * Changelog:
- *   2019-11-28:
- *   - modified queries to exclude sponsored stops - we don't have names for them anyway
- *   2019-12-02:
- *   - further improved exclusion check for sponsored stops
- *   - print a proper error message and exit if the API is down
- *   - print a proper error message if npm packages are not installed
- *   - improved progress messages
- *   2019-12-28:
- *   - fixed gyms/stops IDs not ending with .16 not being sent to API
- *   - fixed random issue where names weren't updated
- *   - made logging a bit more structured
- *   - general code refactoring/cleanup
- *   2021-01-19:
- *   - update API domain from .de to .eu
- *   2021-01-20:
- *   - initial public Github release
- *   - proper error handling
- *   2021-01-21:
- *   - add ability to set environment variables instead of modifying the script
+  namefetcher
+
+  Finds unknown fort names in any RM database and attempts to find
+  and update the name and images of them.
+
+  For changelog and details, checkout: https://github.com/sn0opy/namefetcher
 */
 
 let token = '' // the one provided on Discord with this script
@@ -59,6 +21,13 @@ let dbConfig = {
 try {
   console.log('Starting namefetcher')
 
+  const fs = require("fs")
+
+  let settings = {
+    gym: { table: 'gymdetails', imageCol: 'url', id: 'gym_id', type: 'gyms' },
+    stop: { table: 'pokestop', imageCol: 'image', id: 'pokestop_id', type: 'stops' }
+  }
+
   // prefer env variables
   token = process.env.NF_TOKEN || token
   url = process.env.NF_URL || url
@@ -67,6 +36,21 @@ try {
   dbConfig.password = process.env.NF_DB_PASSWORD || dbConfig.password
   dbConfig.database = process.env.NF_DB_DATABASE || dbConfig.database
   dbConfig.port = process.env.NF_DB_PORT || dbConfig.port
+
+  const col_conf = process.env.NF_DB_COLS_CONF
+  if (col_conf) {
+    if (!col_conf.startsWith('/')) {
+      console.error(`NF_DB_COLS_CONF only accepts absolute paths`)
+      process.exit(1)
+    }
+
+    try {
+      settings = JSON.parse(fs.readFileSync(col_conf));
+    } catch (e) {
+      console.error(`Cannot load custom column config. Got:\n${e.message}`)
+      process.exit(1)
+    }
+  }
 
   if (!token || !url) {
     console.error(`Please make sure that the url and token variables are set`)
@@ -81,10 +65,6 @@ try {
   const axios = require('axios')
   const mysql = require('mysql2')
   const db = mysql.createConnection(dbConfig)
-  const settings = {
-    gym: { table: 'gymdetails', imageCol: 'url', id: 'gym_id', type: 'gyms' },
-    stop: { table: 'pokestop', imageCol: 'image', id: 'pokestop_id', type: 'stops' }
-  }
 
   async function dbUpdate(data, settings) {
     for (detail of data) {
