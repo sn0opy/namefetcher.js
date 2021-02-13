@@ -113,6 +113,10 @@ try {
     } else if (e.response && e.response.status >= 400) {
       console.error("Error while requesting data from the API. Received:\n")
       console.log(`${e.response.status} ${e.response.statusText}: ${e.response.data.error}`)
+    } else if (e.code && 'sqlMessage' in e) {
+      console.error("Error while connecting to your database:\n")
+      console.log(e.code)
+      console.log(e.message)
     } else if (e.code) {
       console.error("Unknown error while requesting data from the API. Received:\n")
       console.log(e.code)
