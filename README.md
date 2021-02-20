@@ -21,6 +21,7 @@ If you cloned the whole repository, simply run: `npm install`
       - NF_DB_PASSWORD
       - NF_DB_DATABASE
       - NF_DB_PORT     (default: 3306)
+      - NF_INTERVAL    (re-run every n hours, Docker only)
   * run: `node name_fetcher.js`
 
 By default, this script will run perfectly well with any RM database. If
@@ -56,3 +57,6 @@ format should look like so:
   * 2021-01-21:
     - add ability to set environment variables instead of modifying the script
     - add ability to specify a different column format / names via `NF_DB_COLS_CONF`
+  * 2021-02-20:
+    - add Dockerfile
+
