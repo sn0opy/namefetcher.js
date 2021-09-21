@@ -95,7 +95,7 @@ try {
 
   (async () => {
     for (x of Object.keys(settings)) {
-      await db.promise().query(`SELECT ${settings[x].id} as id FROM ${settings[x].table} WHERE (name IS NULL OR name="unknown") AND LENGTH(${settings[x].id}) > 32`)
+      await db.promise().query(`SELECT ${settings[x].id} as id FROM ${settings[x].table} WHERE (name IS NULL OR name="unknown") AND ${settings[x].id} REGEXP '[A-Za-z0-9]{32}\\.\\\\d{2}'`)
         .then(async ([dbret]) => {
           console.log(`\nRequesting ${dbret.length} unknown ${x} from API`)
           const count = await askApiAndUpdate(dbret, settings[x])

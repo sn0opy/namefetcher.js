@@ -37,6 +37,8 @@ format should look like so:
 ```
 
 ## Changelog
+  * 2021-09-21:
+    - use regex instead of length check to search for IDs
   * 2021-01-20:
     - initial public Github release
     - proper error handling
