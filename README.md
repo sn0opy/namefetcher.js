@@ -17,6 +17,7 @@ If you cloned the whole repository, simply run: `npm install`
       - NF_TOKEN
       - NF_URL
       - NF_DB_HOST     (default: 127.0.0.1)
+      - NF_DB_SOCKETPATH 
       - NF_DB_USER
       - NF_DB_PASSWORD
       - NF_DB_DATABASE
@@ -29,7 +30,7 @@ you like to use it with a different DB format, you can specify a custom JSON
 formatted config file with adjusted column names via `NF_DB_COLS_CONF`. The
 format should look like so:
 
-```
+```json
 {
   "gym": { "table": "gymdetails", "imageCol": "url", "id": "gym_id", "type": "gyms" },
   "stop": { "table": "pokestop", "imageCol": "image", "id": "pokestop_id", "type": "stops" }
@@ -47,4 +48,3 @@ format should look like so:
     - add ability to specify a different column format / names via `NF_DB_COLS_CONF`
   * 2021-02-20:
     - add Dockerfile
-

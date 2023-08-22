@@ -11,10 +11,11 @@ let token = '' // the one provided on Discord with this script
 let url = ''   // also provided on Discord
 let dbConfig = {
   'host': '127.0.0.1',
+  'socketPath': '',
   'user': '',
   'password': '',
   'database': '',
-  'port': '3306',
+  'port': '3306'
 }
 
 // don't edit anything below this line
@@ -32,6 +33,7 @@ try {
   token = process.env.NF_TOKEN || token
   url = process.env.NF_URL || url
   dbConfig.host = process.env.NF_DB_HOST || dbConfig.host
+  dbConfig.socketPath = process.env.NF_DB_SOCKETPATH || dbConfig.socketPath
   dbConfig.user = process.env.NF_DB_USER || dbConfig.user
   dbConfig.password = process.env.NF_DB_PASSWORD || dbConfig.password
   dbConfig.database = process.env.NF_DB_DATABASE || dbConfig.database
