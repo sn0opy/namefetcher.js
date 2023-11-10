@@ -4,7 +4,7 @@
   "description": "Fetches names for given IDs",
   "main": "name_fetcher.js",
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^1.6.0",
     "mysql2": "^2.2.5"
   },
   "devDependencies": {},
